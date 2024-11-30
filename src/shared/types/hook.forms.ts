@@ -38,6 +38,7 @@ export type UserRecommendationType = {
     assignment_avg: number;
     active_assignments: number;
     availability: number;
+    importance: number;
 }
 
 interface TechSkills {

@@ -15,13 +15,14 @@ import {
   mappingSeniorityLevel,
 } from "@shared/utils/mapping-levels.util";
 import { IconCircle, IconDownload } from "@tabler/icons-react";
+import { Rating } from "react-simple-star-rating";
 
 interface CardUserProps {
   user: UserRecommendationType;
   index: number;
 }
 
-export const CardUser = ({ user, index }: CardUserProps) => {
+export const CardUser = ({ user }: CardUserProps) => {
   const handleDownloadPDF = () => {
     const link = document.createElement("a");
     link.href = "/assets/sample.pdf";
@@ -29,12 +30,34 @@ export const CardUser = ({ user, index }: CardUserProps) => {
     link.click();
   };
 
+  const getInterpolatedColor = () => {
+    if (user.availability < 0 || user.availability > 180) {
+      throw new Error("Value must be between 0 and 180.");
+    }
+
+    if (user.availability < 0 || user.availability > 180) {
+      throw new Error("Value must be between 0 and 180.");
+    }
+
+    if (user.availability <= 60) {
+      return "#00C000";
+    } else if (user.availability <= 120) {
+      return "#FFA500";
+    } else {
+      return "#FF0000";
+    }
+  };
+
   return (
     <Card withBorder>
       <Stack>
         <Group justify="space-between">
           <Group gap={8}>
-            <IconCircle size={14} color="#00C000" fill="#00C000" />
+            <IconCircle
+              size={14}
+              color={getInterpolatedColor()}
+              fill={getInterpolatedColor()}
+            />
             <Text fw={600}>{user.name}</Text>
           </Group>
           <ActionIcon variant="default" onClick={handleDownloadPDF}>
@@ -43,7 +66,7 @@ export const CardUser = ({ user, index }: CardUserProps) => {
         </Group>
         <Card.Section>
           <Image
-            src={`https://i.pravatar.cc/300?img=${index + 7}`}
+            src={`https://i.pravatar.cc/300?img=${user.weekly_available_hours}`}
             alt="User Avatar"
             h={250}
           />
@@ -62,12 +85,16 @@ export const CardUser = ({ user, index }: CardUserProps) => {
             <Text c="violet">{user.weekly_available_hours}h</Text>
           </Group>
           <Group justify="space-between">
-            <Text>Days:</Text>
+            <Text>Days Until Availability: </Text>
             <Text c="violet">{user.availability} days</Text>
+          </Group>
+          <Group justify="space-between">
+            <Text>Priority</Text>
+            <Rating size={16} initialValue={(user.importance / 100) * 5} />
           </Group>
           <Group align="start">
             <Text>Tech Skills:</Text>
-            <Group>
+            <Group gap={6}>
               {Object.entries(user.tech_skills).map(([tech, level]) => (
                 <Pill key={tech}>
                   {tech} - {mappingSeniorityLevel[level]}
