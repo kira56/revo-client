@@ -15,7 +15,7 @@ export const Recommendations = () => {
             </Group>
             <Stack gap={4}>
               <Group justify="space-between">
-                <Text fw={600} c="gray">
+                <Text fw={600} c="violet">
                   TechCorp Inc.
                 </Text>
                 <Text>Remote</Text>

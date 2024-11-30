@@ -4,10 +4,10 @@ import { Recommendations } from "./components/recommendations/recommendations";
 
 function App() {
   return (
-    <Container size="xl" my={20}>
+    <Container size="lg" mt={50}>
       <Stack>
         <Title ta="center">Revo Client</Title>
-        <Grid>
+        <Grid gutter={20}>
           <Grid.Col span={6}>
             <Card withBorder>
               <ClientForm />

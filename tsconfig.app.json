@@ -17,7 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "@context/*": ["./src/context/*"],
-      "@theme/*": ["./src/theme/*"]
+      "@theme/*": ["./src/theme/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@resolvers/*": ["./src/resolvers/*"]
     },
     /* Linting */
     "strict": true,

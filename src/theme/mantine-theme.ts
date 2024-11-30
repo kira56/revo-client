@@ -14,6 +14,7 @@ export const mantineTheme = createTheme({
     cursorType: "pointer",
     fontFamily: 'Open Sans, sans-serif',
     fontFamilyMonospace: "Roboto, sans-serif",
+    primaryColor: "violet",
     headings: {
         fontFamily: "Roboto, sans-serif",
         sizes: {
@@ -83,5 +84,26 @@ export const mantineTheme = createTheme({
                 },
             }),
         },
+        Select: {
+            styles: () => ({
+                label: {
+                    fontWeight: 600,
+                },
+            }),
+        },
+        MultiSelect: {
+            styles: () => ({
+                label: {
+                    fontWeight: 600,
+                },
+            }),
+        },
+        DatePickerInput: {
+            styles: () => ({
+                label: {
+                    fontWeight: 600,
+                },
+            }),
+        }
     },
 })

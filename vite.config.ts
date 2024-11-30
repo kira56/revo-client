@@ -8,6 +8,9 @@ export default defineConfig({
     alias: {
       '@context': '/src/context',
       '@theme': '/src/theme',
+      '@types': '/src/types',
+      '@shared': '/src/shared',
+      '@resolvers': '/src/resolvers'
     },
   },
 })
