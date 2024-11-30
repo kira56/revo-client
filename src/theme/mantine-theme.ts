@@ -104,6 +104,20 @@ export const mantineTheme = createTheme({
                     fontWeight: 600,
                 },
             }),
+        },
+        PasswordInput: {
+            styles: () => ({
+                label: {
+                    fontWeight: 600,
+                },
+            }),
+        },
+        Drawer: {
+            styles: () => ({
+                title: {
+                    fontWeight: 600,
+                },
+            }),
         }
     },
 })

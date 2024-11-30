@@ -12,8 +12,7 @@ import {
 import { ClientFormType } from "../../../shared/types/hook.forms";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { ClientResolver } from "@resolvers/client-resolver.zod";
-import { IconCalendar, IconChevronDown } from "@tabler/icons-react";
-import { DatePickerInput } from "@mantine/dates";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export const ClientForm = () => {
   const clientMethods = useForm<ClientFormType>({
@@ -24,9 +23,9 @@ export const ClientForm = () => {
       englishLevel: "",
       techStack: [],
       primaryTechStack: "",
-      team: "",
-      startDate: "",
-      endDate: "",
+      // team: "",
+      // startDate: "",
+      // endDate: "",
       teamLead: false,
       hoursPerWeek: 0,
       flexibleSchedule: false,
@@ -103,7 +102,7 @@ export const ClientForm = () => {
               />
             )}
           />
-          <Controller
+          {/* <Controller
             name="team"
             render={({ field }) => (
               <Select
@@ -141,7 +140,7 @@ export const ClientForm = () => {
                 leftSection={<IconCalendar size={14} />}
               />
             )}
-          />
+          /> */}
           <Controller
             name="hoursPerWeek"
             render={({ field }) => (

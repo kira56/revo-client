@@ -18,7 +18,10 @@
       "@context/*": ["./src/context/*"],
       "@theme/*": ["./src/theme/*"],
       "@shared/*": ["./src/shared/*"],
-      "@resolvers/*": ["./src/resolvers/*"]
+      "@resolvers/*": ["./src/resolvers/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@components/*": ["./src/components/*"],
+      "@store/*": ["./src/store/*"]
     },
 
     /* Linting */

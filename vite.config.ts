@@ -10,7 +10,10 @@ export default defineConfig({
       '@theme': '/src/theme',
       '@types': '/src/types',
       '@shared': '/src/shared',
-      '@resolvers': '/src/resolvers'
+      '@resolvers': '/src/resolvers',
+      '@pages': '/src/pages',
+      '@components': '/src/components',
+      '@store': '/src/store'
     },
   },
 })
