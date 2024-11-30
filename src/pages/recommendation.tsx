@@ -13,13 +13,20 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { MBIcon } from "@shared/icons/mb.icon";
+import { UserRecommendationType } from "@shared/types/hook.forms";
 import { useGlobalStore } from "@store/global.store";
 import { IconMenu3 } from "@tabler/icons-react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export const Recommendation = () => {
   const navigate = useNavigate();
   const logout = useGlobalStore((state) => state.logout);
+
+  const [usersRecommendation, setUsersRecommendation] = useState<
+    UserRecommendationType[]
+  >([]);
 
   const [opened, { close, open }] = useDisclosure(false);
 
@@ -28,11 +35,13 @@ export const Recommendation = () => {
     logout();
   };
 
+  console.log(usersRecommendation, "<---- usersRecommendation");
+
   return (
     <AppShell>
       <AppShell.Header h={60}>
         <Group h="100%" mx={30} justify="space-between">
-          <Text fw={600}>APP CLIENT</Text>
+          <MBIcon />
           <Group>
             <Button variant="default" onClick={open}>
               History
@@ -51,24 +60,24 @@ export const Recommendation = () => {
           <HistoryDrawer opened={opened} close={close} />
         </Group>
       </AppShell.Header>
-      <AppShell.Main my={100}>
+      <AppShell.Main my={100} px={20}>
         <Container size="xl">
           <Grid gutter={20}>
             <Grid.Col span={6}>
               <Card shadow="lg">
-                <ClientForm />
+                <ClientForm setUsersRecommendation={setUsersRecommendation} />
               </Card>
             </Grid.Col>
             <Grid.Col span={6}>
               <Card shadow="lg">
-                <Recommendations />
+                <Recommendations users={usersRecommendation} />
               </Card>
             </Grid.Col>
           </Grid>
         </Container>
       </AppShell.Main>
       <AppShell.Footer py={10}>
-        <Text ta="center" c="gray">
+        <Text ta="center" c="gray" size="sm">
           Powered by Ravn
         </Text>
       </AppShell.Footer>

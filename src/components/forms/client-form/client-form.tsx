@@ -1,5 +1,6 @@
 import {
   Button,
+  ComboboxItem,
   Group,
   MultiSelect,
   NumberInput,
@@ -9,12 +10,67 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { ClientFormType } from "../../../shared/types/hook.forms";
+import {
+  ClientFormType,
+  UserRecommendationType,
+} from "../../../shared/types/hook.forms";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { ClientResolver } from "@resolvers/client-resolver.zod";
 import { IconChevronDown } from "@tabler/icons-react";
+import { EnglishLevelEnum, SeniorityLevelEnum } from "@shared/enums/level.enum";
+import { useMutation } from "@tanstack/react-query";
+import clientAxios from "@shared/config/axios-client";
+import { useGlobalStore } from "@store/global.store";
 
-export const ClientForm = () => {
+const seniorityLevels: ComboboxItem[] = [
+  {
+    value: SeniorityLevelEnum.JUNIOR.toString(),
+    label: "Junior",
+  },
+  {
+    value: SeniorityLevelEnum.JUNIOR_MID.toString(),
+    label: "Junior-Mid",
+  },
+  {
+    value: SeniorityLevelEnum.MID.toString(),
+    label: "Mid",
+  },
+  {
+    value: SeniorityLevelEnum.MID_SENIOR.toString(),
+    label: "Mid-Senior",
+  },
+  {
+    value: SeniorityLevelEnum.SENIOR.toString(),
+    label: "Senior",
+  },
+  {
+    value: SeniorityLevelEnum.TRAINEE.toString(),
+    label: "Trainee",
+  },
+];
+
+const englishLevels: ComboboxItem[] = [
+  {
+    value: EnglishLevelEnum.BASIC.toString(),
+    label: "Basic",
+  },
+  {
+    value: EnglishLevelEnum.PROFICIENT.toString(),
+    label: "Proficient",
+  },
+  {
+    value: EnglishLevelEnum.ADVANCED.toString(),
+    label: "Advanced",
+  },
+];
+
+interface ClientFormProps {
+  setUsersRecommendation: (users: UserRecommendationType[]) => void;
+}
+
+export const ClientForm = ({ setUsersRecommendation }: ClientFormProps) => {
+  const token = useGlobalStore((state) => state.token);
+
   const clientMethods = useForm<ClientFormType>({
     mode: "all",
     resolver: ClientResolver,
@@ -34,12 +90,41 @@ export const ClientForm = () => {
 
   const {
     handleSubmit,
+    reset,
     formState: { isValid },
   } = clientMethods;
 
-  const clientHandleSubmit = (formData: ClientFormType) => {
-    console.log("Send DATA");
-    console.log(formData, "<---- FORM DATA");
+  const processMutation = useMutation({
+    mutationFn: async (formData: ClientFormType) => {
+      const response = await clientAxios.post(
+        "/recommendation",
+        {
+          seniority: formData.seniorityLevel,
+          english: formData.englishLevel,
+          techStacks: formData.techStack,
+          primaryTechStack: formData.primaryTechStack,
+          hoursPerWeek: formData.hoursPerWeek,
+          teamLead: formData.teamLead,
+          flexibleSchedule: formData.flexibleSchedule,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data.content as UserRecommendationType[];
+    },
+  });
+
+  const clientHandleSubmit = async (formData: ClientFormType) => {
+    await processMutation.mutateAsync(formData, {
+      onSuccess: (data) => {
+        setUsersRecommendation(data);
+        reset();
+      },
+    });
   };
 
   return (
@@ -54,7 +139,7 @@ export const ClientForm = () => {
                 {...field}
                 label="Seniority Level"
                 placeholder="Level"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={seniorityLevels}
                 required
                 rightSection={<IconChevronDown size={14} />}
               />
@@ -67,7 +152,7 @@ export const ClientForm = () => {
                 {...field}
                 label="English Level"
                 placeholder="Level"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={englishLevels}
                 required
                 rightSection={<IconChevronDown size={14} />}
               />
@@ -84,7 +169,20 @@ export const ClientForm = () => {
                 label="Tech Stacks"
                 placeholder="Pick value"
                 required
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={[
+                  "React",
+                  "Angular",
+                  "Vue",
+                  "Svelte",
+                  "JavaScript",
+                  "Design",
+                  "Node",
+                  "Rails",
+                  "Python",
+                  "HTML",
+                  "CSS",
+                  "Java",
+                ]}
                 rightSection={<IconChevronDown size={14} />}
               />
             )}
@@ -96,7 +194,20 @@ export const ClientForm = () => {
                 {...field}
                 label="Primary Tech Stack"
                 placeholder="Options"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={[
+                  "React",
+                  "Angular",
+                  "Vue",
+                  "Svelte",
+                  "JavaScript",
+                  "Design",
+                  "Node",
+                  "Rails",
+                  "Python",
+                  "HTML",
+                  "CSS",
+                  "Java",
+                ]}
                 required
                 rightSection={<IconChevronDown size={14} />}
               />

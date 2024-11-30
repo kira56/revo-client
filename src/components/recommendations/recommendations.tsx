@@ -1,32 +1,40 @@
 import { Card, Group, Stack, Text, Title } from "@mantine/core";
+import { UserRecommendationType } from "@shared/types/hook.forms";
+interface RecommendationsProps {
+  users: UserRecommendationType[];
+}
 
-export const Recommendations = () => {
+export const Recommendations = ({ users }: RecommendationsProps) => {
   return (
     <Stack>
       <Title order={4}>Recommended Positions</Title>
-      {Array.from({ length: 5 }).map((_, index) => (
-        <Card key={index} withBorder>
-          <Stack gap={8}>
-            <Group justify="space-between">
-              <Text fw={600}>Senior Full Stack Developer</Text>
-              <Text fw={600} c="green">
-                $120k - $150k
-              </Text>
-            </Group>
-            <Stack gap={4}>
+      {!users.length ? (
+        <Text>No Recommendations</Text>
+      ) : (
+        users.map((user) => (
+          <Card key={user.id} withBorder>
+            <Stack gap={8}>
               <Group justify="space-between">
-                <Text fw={600} c="violet">
-                  TechCorp Inc.
+                <Text fw={600}>{user.name}</Text>
+                <Text fw={600} c="green">
+                  {user.english_level}
                 </Text>
-                <Text>Remote</Text>
               </Group>
-              <Text size="sm" c="gray">
-                Requirements: Vuejs, Nodejs, MongoDB, 5+ years of experience
-              </Text>
+              <Stack gap={4}>
+                <Group justify="space-between">
+                  <Text fw={600} c="violet">
+                    {user.seniority_level}
+                  </Text>
+                  <Text>{user.id}</Text>
+                </Group>
+                {/* <Text size="sm" c="gray">
+                  {user.requirements}
+                </Text> */}
+              </Stack>
             </Stack>
-          </Stack>
-        </Card>
-      ))}
+          </Card>
+        ))
+      )}
     </Stack>
   );
 };

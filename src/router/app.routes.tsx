@@ -4,6 +4,7 @@ import { Recommendation } from "../pages/recommendation";
 import { Login } from "@pages/auth/login/login";
 import { Register } from "@pages/auth/register";
 import { ProtectedRoute } from "./protected.routes";
+import { PublicRoute } from "./public.routes";
 
 export const AppRouter = () => {
   return (
@@ -16,8 +17,22 @@ export const AppRouter = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
       <Route
         path="/recommendation"
         element={
