@@ -35,8 +35,6 @@ export const Recommendation = () => {
     logout();
   };
 
-  console.log(usersRecommendation, "<---- usersRecommendation");
-
   return (
     <AppShell>
       <AppShell.Header h={60}>
@@ -63,15 +61,13 @@ export const Recommendation = () => {
       <AppShell.Main my={100} px={20}>
         <Container size="xl">
           <Grid gutter={20}>
-            <Grid.Col span={6}>
+            <Grid.Col span={{ sm: 12, lg: 5 }}>
               <Card shadow="lg">
                 <ClientForm setUsersRecommendation={setUsersRecommendation} />
               </Card>
             </Grid.Col>
-            <Grid.Col span={6}>
-              <Card shadow="lg">
-                <Recommendations users={usersRecommendation} />
-              </Card>
+            <Grid.Col span={{ sm: 12, lg: 7 }}>
+              <Recommendations users={usersRecommendation} />
             </Grid.Col>
           </Grid>
         </Container>

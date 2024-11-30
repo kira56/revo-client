@@ -5,11 +5,14 @@ import {
   Stack,
   TextInput,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { LoginResolver } from "@resolvers/login-resolver.zod";
 import clientAxios from "@shared/config/axios-client";
 import { LoginFormType } from "@shared/types/hook.forms";
 import { useGlobalStore } from "@store/global.store";
+import { IconX } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -54,6 +57,22 @@ export const LoginForm = () => {
 
           navigate("/recommendation");
         }
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          throw notifications.show({
+            color: "red",
+            position: "top-right",
+            message: error.response?.data.message,
+            icon: <IconX size={14} />,
+          });
+        }
+        throw notifications.show({
+          color: "red",
+          position: "top-right",
+          message: "Something went wrong, Please try again",
+          icon: <IconX size={14} />,
+        });
       },
     });
   };

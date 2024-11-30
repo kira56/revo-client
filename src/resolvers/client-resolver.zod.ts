@@ -14,6 +14,7 @@ export const ClientSchema: ZodType<ClientFormType> = z
         teamLead: z.boolean(),
         hoursPerWeek: z.number().int().positive(),
         flexibleSchedule: z.boolean(),
+        days: z.number().int().positive(),
     })
 
 

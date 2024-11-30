@@ -9,6 +9,7 @@ export type ClientFormType = {
     teamLead: boolean
     hoursPerWeek: number
     flexibleSchedule: boolean
+    days: number
 }
 
 export type LoginFormType = {
@@ -24,6 +25,7 @@ export type RegisterFormType = {
 }
 
 type TechSkillLevel = "JUNIOR" | "MID" | "SENIOR" | "MID_SENIOR" | "JUNIOR_MID" | "TRAINEE";
+type EnglishLevel = "BASIC" | "PROFICIENT" | "ADVANCED";
 
 export type UserRecommendationType = {
     id: string;
@@ -31,10 +33,11 @@ export type UserRecommendationType = {
     similarity_score: number;
     weekly_available_hours: number;
     seniority_level: TechSkillLevel;
-    english_level: number;
+    english_level: EnglishLevel;
     tech_skills: Record<string, TechSkillLevel>;
     assignment_avg: number;
     active_assignments: number;
+    availability: number;
 }
 
 interface TechSkills {
